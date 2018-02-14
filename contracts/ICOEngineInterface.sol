@@ -7,7 +7,7 @@ contract ICOEngineInterface {
     function started() public view returns(bool);
 
     // false if the ico is not started, false if the ico is started and running, true if the ico is completed
-    function endend() public view returns(bool);
+    function ended() public view returns(bool);
 
     // time stamp of the starting time of the ico, must return 0 if it depends on the block number
     function startTime() public view returns(uint);
@@ -19,7 +19,7 @@ contract ICOEngineInterface {
     function startBlock() public view returns(uint);
 
     // ending block number of the ico, must retrun 0 if it depends on the time stamp
-    function endBloc() public view returns(uint);
+    function endBlock() public view returns(uint);
 
     // returns the total number of the tokens available for the sale, must not change when the ico is started
     function totalTokens() public view returns(uint);
