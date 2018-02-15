@@ -13,20 +13,15 @@ contract KYCBase is SafeMath {
         kycSignerAddress = _kycSigner;
     }
 
-    function kycCheck(address buyerAddress, uint64 buyerId, uint maxAmount, uint8 v, bytes32 r, bytes32 s)
-        internal view returns(bool)
-    {
-        uint256 hash = sha256("Eidoo icoengine authorization", this, buyerAddress, buyerId, maxAmount);
-        return ecrecover(hash, v, r, s) == kycSignerAddress;
-    }
-
-    // Must be implemented in descending contract
+    // Must be implemented in descending contract to assign tokens to the buyers. Called after the KYC verification is passed
     function releaseTokensTo(address buyer) internal returns(bool);
 
     function buyTokensFor(address buyerAddress, uint64 buyerId, uint maxAmount, uint8 v, bytes32 r, bytes32 s)
         public payable returns (bool)
     {
-        if (!kycCheck(buyerAddress, maxAmount, v, r, s)) {
+        // check the signature
+        bytes32 hash = sha256("Eidoo icoengine authorization", this, buyerAddress, buyerId, maxAmount);
+        if (ecrecover(hash, v, r, s) != kycSignerAddress) {
             revert();
         } else {
             uint256 totalPayed = alreadyPayed[buyerId].add(msg.value);
@@ -39,7 +34,7 @@ contract KYCBase is SafeMath {
     function buyTokens(uint64 buyerId, uint maxAmount, uint8 v, bytes32 r, bytes32 s)
         public payable returns (bool)
     {
-        return buyTokensFor(msg.sender, uint64 buyerId, maxAmount, v, r, s);
+        return buyTokensFor(msg.sender, buyerId, maxAmount, v, r, s);
     }
 
     // No payable fallback function, must be used buyTokens functions
