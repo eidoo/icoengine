@@ -5,12 +5,14 @@ import "./SafeMath.sol";
 // Abstract base contract
 contract KYCBase {
     using SafeMath for uint256;
-    address public kycSignerAddress;
+    mapping (address => bool) public isKycSigner;
 
     mapping (uint64 => uint256) public alreadyPayed;
 
-    function KYCBase(address _kycSigner) internal {
-        kycSignerAddress = _kycSigner;
+    function KYCBase(address [] kycSigners) internal {
+        for (uint i = 0; i < kycSigners.length; i++) {
+            isKycSigner[kycSigners[i]] = true;
+        }
     }
 
     // Must be implemented in descending contract to assign tokens to the buyers. Called after the KYC verification is passed
@@ -41,7 +43,8 @@ contract KYCBase {
     {
         // check the signature
         bytes32 hash = sha256("Eidoo icoengine authorization", this, buyerAddress, buyerId, maxAmount);
-        if (ecrecover(hash, v, r, s) != kycSignerAddress) {
+        address signer = ecrecover(hash, v, r, s);
+        if (isKycSigner[signer]) {
             revert();
         } else {
             uint256 totalPayed = alreadyPayed[buyerId].add(msg.value);
