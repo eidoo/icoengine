@@ -15,11 +15,13 @@ contract ICOEngineInterface {
     // time stamp of the ending time of the ico, must retrun 0 if it depends on the block number
     function endTime() public view returns(uint);
 
-    // starting block number of the ico, must return 0 if it depends on the time stamp
-    function startBlock() public view returns(uint);
+    // Optional function, can be implemented in place of startTime
+    // Returns the starting block number of the ico, must return 0 if it depends on the time stamp
+    // function startBlock() public view returns(uint);
 
-    // ending block number of the ico, must retrun 0 if it depends on the time stamp
-    function endBlock() public view returns(uint);
+    // Optional function, can be implemented in place of endTime
+    // Returns theending block number of the ico, must retrun 0 if it depends on the time stamp
+    // function endBlock() public view returns(uint);
 
     // returns the total number of the tokens available for the sale, must not change when the ico is started
     function totalTokens() public view returns(uint);
@@ -28,4 +30,6 @@ contract ICOEngineInterface {
     // then it will decrease. It is used to calculate the percentage of sold tokens as remainingTokens() / totalTokens()
     function remainingTokens() public view returns(uint);
 
+    // return the price as number of tokens released for each ether
+    function price() public view returns(uint);
 }
