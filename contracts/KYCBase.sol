@@ -5,9 +5,11 @@ import "./SafeMath.sol";
 // Abstract base contract
 contract KYCBase {
     using SafeMath for uint256;
-    mapping (address => bool) public isKycSigner;
 
+    mapping (address => bool) public isKycSigner;
     mapping (uint64 => uint256) public alreadyPayed;
+
+    event KycVerified(address signer, address buyerAddress, uint64 buyerId, uint maxAmount);
 
     function KYCBase(address [] kycSigners) internal {
         for (uint i = 0; i < kycSigners.length; i++) {
@@ -20,7 +22,7 @@ contract KYCBase {
 
     // This method can be overridden to enable some sender to buy token for a different address
     function senderAllowedFor(address buyer)
-        internal returns(bool)
+        internal view returns(bool)
     {
         return buyer == msg.sender;
     }
@@ -50,6 +52,7 @@ contract KYCBase {
             uint256 totalPayed = alreadyPayed[buyerId].add(msg.value);
             require(totalPayed <= maxAmount);
             alreadyPayed[buyerId] = totalPayed;
+            KycVerified(signer, buyerAddress, buyerId, maxAmount);
             return releaseTokensTo(buyerAddress);
         }
     }
