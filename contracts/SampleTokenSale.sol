@@ -50,7 +50,9 @@ contract SampleTokenSale is ICOEngineInterface, KYCBase {
         require(now >= startTime && now < endTime);
         uint amount = msg.value.mul(price);
         remainingTokens = remainingTokens.sub(amount);
-        return token.transfer(buyer, amount);
+        wallet.transfer(msg.value);
+        require(token.transfer(buyer, amount));
+        return true;
     }
 
     // from ICOEngineInterface
