@@ -2,7 +2,7 @@ pragma solidity ^0.4.19;
 
 import "./KYCBase.sol";
 
-// this is only an example, do not use it in production
+// this is for testing purpose, do not use it in production
 contract KYCBaseTester is KYCBase {
 
     event ReleaseTokensToCalled(address buyer);
