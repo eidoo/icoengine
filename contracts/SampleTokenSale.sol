@@ -3,13 +3,13 @@ pragma solidity ^0.4.19;
 import "./ICOEngineInterface.sol";
 import "./KYCBase.sol";
 import "./SafeMath.sol";
-import "zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "./ERC20Interface.sol";
 
 // This is a basic ico example, do not use it in production.
-contract SampleICO is ICOEngineInterface, KYCBase {
+contract SampleTokenSale is ICOEngineInterface, KYCBase {
     using SafeMath for uint;
 
-    ERC20 public token;
+    ERC20Interface public token;
     address public wallet;
 
     // from ICOEngineInterface
@@ -33,10 +33,10 @@ contract SampleICO is ICOEngineInterface, KYCBase {
      *  approve() method to the deployed contract address to assign tokens to
      *  be sold by the ICO.
      */
-    function SampleICO(address [] kycSigner, address _token, address _wallet, uint _startTime, uint _endTime, uint _price, uint _totalTokens)
+    function SampleTokenSale(address [] kycSigner, address _token, address _wallet, uint _startTime, uint _endTime, uint _price, uint _totalTokens)
         public KYCBase(kycSigner)
     {
-        token = ERC20(_token);
+        token = ERC20Interface(_token);
         wallet = _wallet;
         startTime = _startTime;
         endTime = _endTime;
