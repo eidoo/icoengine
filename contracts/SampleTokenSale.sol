@@ -30,8 +30,8 @@ contract SampleTokenSale is ICOEngineInterface, KYCBase {
 
     /**
      *  After you deployed the SampleICO contract, you have to call the ERC20
-     *  approve() method to the deployed contract address to assign tokens to
-     *  be sold by the ICO.
+     *  approve() method from the _wallet account to the deployed contract address to assign
+     *  the tokens to be sold by the ICO.
      */
     function SampleTokenSale(address [] kycSigner, address _token, address _wallet, uint _startTime, uint _endTime, uint _price, uint _totalTokens)
         public KYCBase(kycSigner)
@@ -51,7 +51,7 @@ contract SampleTokenSale is ICOEngineInterface, KYCBase {
         uint amount = msg.value.mul(price);
         remainingTokens = remainingTokens.sub(amount);
         wallet.transfer(msg.value);
-        require(token.transfer(buyer, amount));
+        require(token.transferFrom(wallet, buyer, amount));
         return true;
     }
 
