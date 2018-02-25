@@ -9,7 +9,7 @@ contract KYCBase {
     mapping (address => bool) public isKycSigner;
     mapping (uint64 => uint256) public alreadyPayed;
 
-    event KycVerified(address signer, address buyerAddress, uint64 buyerId, uint maxAmount);
+    event KycVerified(address indexed signer, address buyerAddress, uint64 buyerId, uint maxAmount);
 
     function KYCBase(address [] kycSigners) internal {
         for (uint i = 0; i < kycSigners.length; i++) {
