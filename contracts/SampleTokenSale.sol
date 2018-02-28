@@ -62,6 +62,6 @@ contract SampleTokenSale is ICOEngineInterface, KYCBase {
 
     // from ICOEngineInterface
     function ended() public view returns(bool) {
-        return now >= endTime;
+        return now >= endTime || remainingTokens == 0;
     }
 }
