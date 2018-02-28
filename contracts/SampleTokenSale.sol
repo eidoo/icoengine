@@ -46,7 +46,7 @@ contract SampleTokenSale is ICOEngineInterface, KYCBase {
     }
 
     // from KYCBase
-    function releaseTokensTo(address buyer) internal returns(bool) {
+    function releaseTokensTo(address buyer, address signer) internal returns(bool) {
         require(now >= startTime && now < endTime);
         uint amount = msg.value.mul(price);
         remainingTokens = remainingTokens.sub(amount);

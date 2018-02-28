@@ -18,7 +18,7 @@ contract KYCBase {
     }
 
     // Must be implemented in descending contract to assign tokens to the buyers. Called after the KYC verification is passed
-    function releaseTokensTo(address buyer) internal returns(bool);
+    function releaseTokensTo(address buyer, address signer) internal returns(bool);
 
     // This method can be overridden to enable some sender to buy token for a different address
     function senderAllowedFor(address buyer)
@@ -53,7 +53,7 @@ contract KYCBase {
             require(totalPayed <= maxAmount);
             alreadyPayed[buyerId] = totalPayed;
             KycVerified(signer, buyerAddress, buyerId, maxAmount);
-            return releaseTokensTo(buyerAddress);
+            return releaseTokensTo(buyerAddress, signer);
         }
     }
 
