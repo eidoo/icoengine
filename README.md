@@ -16,7 +16,7 @@ This is the base contract for all smart contracts that use the ICO Engine KYC.
 
 The KYCBase constructor requires an array of the signers addresses, these addresses are provided by Eidoo Sagl and for the Ethereum production network must be:
 
-    [0x4e315e5de2abbf7b745d9628ee60e4355c0fab86, 0xdd5ecefcaa0cb5d75f7b72dc9d2ce446d6d00520] 
+    [0xdd5ecefcaa0cb5d75f7b72dc9d2ce446d6d00520, 0x4e315e5de2abbf7b745d9628ee60e4355c0fab86] 
 
 The descending contracts must implement the function _releaseTokensTo()_ to assign the tokens to a buyer, it is called when the kyc verification is passed:
 
