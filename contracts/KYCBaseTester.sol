@@ -5,8 +5,7 @@ import "./KYCBase.sol";
 // this is for testing purpose, do not use it in production
 contract KYCBaseTester is KYCBase {
 
-    event ReleaseTokensToCalled(address buyer);
-    event SenderAllowedForCalled(address buyer, bool returnValue);
+    event ReleaseTokensToCalled(address buyer);    
 
     constructor(address[] signers) public
         KYCBase(signers)
