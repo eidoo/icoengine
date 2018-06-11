@@ -21,7 +21,6 @@ contract KYCBaseTester is KYCBase {
         internal view returns(bool)
     {
         bool value = super.senderAllowedFor(buyer);
-        SenderAllowedForCalled(buyer, value);
         return value;
     }
 }
