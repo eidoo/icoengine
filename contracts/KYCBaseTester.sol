@@ -8,12 +8,12 @@ contract KYCBaseTester is KYCBase {
     event ReleaseTokensToCalled(address buyer);
     event SenderAllowedForCalled(address buyer, bool returnValue);
 
-    function KYCBaseTester(address [] signers) public
+    constructor(address[] signers) public
         KYCBase(signers)
     {}
 
     function releaseTokensTo(address buyer) internal returns(bool) {
-        ReleaseTokensToCalled(buyer);
+        emit ReleaseTokensToCalled(buyer);
         return true;
     }
 

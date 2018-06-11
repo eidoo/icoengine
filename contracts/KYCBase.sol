@@ -11,7 +11,7 @@ contract KYCBase {
 
     event KycVerified(address indexed signer, address buyerAddress, uint64 buyerId, uint maxAmount);
 
-    function KYCBase(address [] kycSigners) internal {
+    constructor(address[] kycSigners) internal {
         for (uint i = 0; i < kycSigners.length; i++) {
             isKycSigner[kycSigners[i]] = true;
         }
@@ -52,7 +52,7 @@ contract KYCBase {
             uint256 totalPayed = alreadyPayed[buyerId].add(msg.value);
             require(totalPayed <= maxAmount);
             alreadyPayed[buyerId] = totalPayed;
-            KycVerified(signer, buyerAddress, buyerId, maxAmount);
+            emit KycVerified(signer, buyerAddress, buyerId, maxAmount);
             return releaseTokensTo(buyerAddress);
         }
     }

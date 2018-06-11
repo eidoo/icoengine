@@ -33,7 +33,7 @@ contract SampleTokenSale is ICOEngineInterface, KYCBase {
      *  approve() method from the _wallet account to the deployed contract address to assign
      *  the tokens to be sold by the ICO.
      */
-    function SampleTokenSale(address [] kycSigner, address _token, address _wallet, uint _startTime, uint _endTime, uint _price, uint _totalTokens)
+    constructor(address[] kycSigner, address _token, address _wallet, uint _startTime, uint _endTime, uint _price, uint _totalTokens)
         public KYCBase(kycSigner)
     {
         token = ERC20Interface(_token);
